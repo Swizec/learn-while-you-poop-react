@@ -21,13 +21,30 @@ const Name = ({ name }) => (
     </Text>
 );
 
-const Message = ({ message }) => (
-    <div>
-        <Avatar src={message.avatar} />
-        <Name name={message.username} />
-        <Text>{message.text}</Text>
-    </div>
-);
+class Message extends React.Component {
+    state = {
+        read: true
+    };
+
+    randomProperty = 1234;
+
+    componentDidMount = () => console.log("Mounted a message");
+
+    render() {
+        const { message } = this.props;
+
+        console.log(this.randomProperty);
+
+        return (
+            <div>
+                {this.state.read ? <p>Already read this message</p> : null}
+                <Avatar src={message.avatar} />
+                <Name name={message.username} />
+                <Text>{message.text}</Text>
+            </div>
+        );
+    }
+}
 
 const messages = [
     {
