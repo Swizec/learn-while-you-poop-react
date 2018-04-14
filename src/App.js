@@ -32,12 +32,12 @@ class Message extends React.Component {
     componentDidMount = () => console.log("Mounted a message");
 
     render() {
-        const { message } = this.props;
+        const { message, hovered } = this.props;
 
         console.log(this.randomProperty);
 
         return (
-            <div>
+            <div style={{ background: hovered ? "red" : "white" }}>
                 {this.state.read ? <p>Already read this message</p> : null}
                 <Avatar src={message.avatar} />
                 <Name name={message.username} />
@@ -61,7 +61,22 @@ const messages = [
 ];
 
 class App extends React.Component {
-    state = {};
+    state = {
+        hoveredMessages: {
+            0: false,
+            1: false
+        }
+    };
+
+    onHover = () =>
+        this.setState({
+            hoveredMessages: { ...this.state.hoveredMessages, 0: true }
+        });
+
+    onUnhover = () =>
+        this.setState({
+            hoveredMessages: { ...this.state.hoveredMessages, 0: false }
+        });
 
     render() {
         return (
@@ -69,7 +84,12 @@ class App extends React.Component {
                 <Hello name="CodeSandbox" />
                 <h2>Start editing to see some magic happen {"\u2728"}</h2>
                 <div>
-                    <Button label="Click Me" />
+                    <Button
+                        label="Click Me"
+                        hovered={this.state.hoveredMessages[0]}
+                        onHover={this.onHover}
+                        onUnhover={this.onUnhover}
+                    />
                 </div>
                 <p>
                     This crazy fox jumped over a lazy dog{" "}
@@ -80,7 +100,12 @@ class App extends React.Component {
                     <Link href="codesandbox.io">Sandbox</Link>
                 </p>
                 <div>
-                    {messages.map(message => <Message message={message} />)}
+                    {messages.map((message, index) => (
+                        <Message
+                            message={message}
+                            hovered={this.state.hoveredMessages[index]}
+                        />
+                    ))}
                 </div>
             </div>
         );

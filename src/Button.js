@@ -9,8 +9,7 @@ const buttonStyles = {
 
 class Button extends React.Component {
     state = {
-        wasClicked: false,
-        background: "white"
+        wasClicked: false
     };
 
     onClick = () => {
@@ -20,20 +19,18 @@ class Button extends React.Component {
     };
 
     mouseOver() {
-        this.setState({
-            background: "red"
-        });
+        this.props.onHover();
     }
 
     mouseOut() {
-        this.setState({
-            background: "white"
-        });
+        this.props.onUnhover();
     }
 
     render() {
         const { label, rounded } = this.props,
-            { wasClicked, background } = this.state;
+            { wasClicked } = this.state;
+
+        const background = this.props.hovered ? "red" : "white";
 
         return (
             <button
