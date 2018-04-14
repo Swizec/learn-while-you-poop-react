@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import Hello from "./Hello";
+import Button from "./Button";
 
 const styles = {
     fontFamily: "sans-serif",
@@ -59,19 +60,31 @@ const messages = [
     }
 ];
 
-const App = () => (
-    <div style={styles}>
-        <Hello name="CodeSandbox" />
-        <h2>Start editing to see some magic happen {"\u2728"}</h2>
-        <p>
-            This crazy fox jumped over a lazy dog <Link href="facebook.com" />
-            <Link href="https://google.com">
-                Google <b>Bold</b>
-            </Link>
-            <Link href="codesandbox.io">Sandbox</Link>
-        </p>
-        <div>{messages.map(message => <Message message={message} />)}</div>
-    </div>
-);
+class App extends React.Component {
+    state = {};
+
+    render() {
+        return (
+            <div style={styles}>
+                <Hello name="CodeSandbox" />
+                <h2>Start editing to see some magic happen {"\u2728"}</h2>
+                <div>
+                    <Button label="Click Me" />
+                </div>
+                <p>
+                    This crazy fox jumped over a lazy dog{" "}
+                    <Link href="facebook.com" />
+                    <Link href="https://google.com">
+                        Google <b>Bold</b>
+                    </Link>
+                    <Link href="codesandbox.io">Sandbox</Link>
+                </p>
+                <div>
+                    {messages.map(message => <Message message={message} />)}
+                </div>
+            </div>
+        );
+    }
+}
 
 export default App;
