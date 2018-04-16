@@ -2,6 +2,8 @@ import React from "react";
 import { render } from "react-dom";
 import Hello from "./Hello";
 import Button from "./Button";
+import Message from "./Message";
+import AppContext from "./AppContext";
 
 const styles = {
     fontFamily: "sans-serif",
@@ -11,41 +13,6 @@ const styles = {
 const Link = ({ href, children }) => (
     <a href={href}>{children || "Click on me"}</a>
 );
-
-const Avatar = ({ src }) => <img src={src} style={{ width: "100px" }} />;
-
-const Text = ({ children }) => <p>{children}</p>;
-
-const Name = ({ name }) => (
-    <Text>
-        <b>{name}</b>
-    </Text>
-);
-
-class Message extends React.Component {
-    state = {
-        read: true
-    };
-
-    randomProperty = 1234;
-
-    componentDidMount = () => console.log("Mounted a message");
-
-    render() {
-        const { message, hovered } = this.props;
-
-        console.log(this.randomProperty);
-
-        return (
-            <div style={{ background: hovered ? "red" : "white" }}>
-                {this.state.read ? <p>Already read this message</p> : null}
-                <Avatar src={message.avatar} />
-                <Name name={message.username} />
-                <Text>{message.text}</Text>
-            </div>
-        );
-    }
-}
 
 const messages = [
     {
@@ -65,48 +32,57 @@ class App extends React.Component {
         hoveredMessages: {
             0: false,
             1: false
-        }
+        },
+        onHover: () =>
+            this.setState({
+                hoveredMessages: {
+                    ...this.state.hoveredMessages,
+                    0: true
+                }
+            }),
+
+        onUnhover: () =>
+            this.setState({
+                hoveredMessages: {
+                    ...this.state.hoveredMessages,
+                    0: false
+                }
+            })
     };
-
-    onHover = () =>
-        this.setState({
-            hoveredMessages: { ...this.state.hoveredMessages, 0: true }
-        });
-
-    onUnhover = () =>
-        this.setState({
-            hoveredMessages: { ...this.state.hoveredMessages, 0: false }
-        });
 
     render() {
         return (
             <div style={styles}>
-                <Hello name="CodeSandbox" />
-                <h2>Start editing to see some magic happen {"\u2728"}</h2>
-                <div>
-                    <Button
-                        label="Click Me"
-                        hovered={this.state.hoveredMessages[0]}
-                        onHover={this.onHover}
-                        onUnhover={this.onUnhover}
-                    />
-                </div>
-                <p>
-                    This crazy fox jumped over a lazy dog{" "}
-                    <Link href="facebook.com" />
-                    <Link href="https://google.com">
-                        Google <b>Bold</b>
-                    </Link>
-                    <Link href="codesandbox.io">Sandbox</Link>
-                </p>
-                <div>
-                    {messages.map((message, index) => (
-                        <Message
-                            message={message}
-                            hovered={this.state.hoveredMessages[index]}
-                        />
-                    ))}
-                </div>
+                <AppContext.Provider value={this.state}>
+                    <Hello name="CodeSandbox" />
+                    <h2>
+                        {" "}
+                        Start editing to see some magic happen {"\u2728"}{" "}
+                    </h2>{" "}
+                    <div>
+                        <Button
+                            label="Click Me"
+                            hovered={this.state.hoveredMessages[0]}
+                        />{" "}
+                    </div>{" "}
+                    <p>
+                        This crazy fox jumped over a lazy dog{" "}
+                        <Link href="facebook.com" />
+                        <Link href="https://google.com">
+                            Google <b> Bold </b>{" "}
+                        </Link>{" "}
+                        <Link href="codesandbox.io"> Sandbox </Link>{" "}
+                    </p>{" "}
+                    <div>
+                        {" "}
+                        {messages.map((message, index) => (
+                            <Message
+                                message={message}
+                                hovered={this.state.hoveredMessages[index]}
+                            />
+                        ))}{" "}
+                    </div>{" "}
+                </AppContext.Provider>
             </div>
         );
     }

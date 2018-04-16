@@ -1,5 +1,7 @@
 import React from "react";
 
+import AppContext from "./AppContext";
+
 const buttonStyles = {
     margin: "10px 10px",
     padding: "10px 20px",
@@ -18,33 +20,36 @@ class Button extends React.Component {
         });
     };
 
-    mouseOver() {
-        this.props.onHover();
-    }
-
-    mouseOut() {
-        this.props.onUnhover();
-    }
-
     render() {
         const { label, rounded } = this.props,
             { wasClicked } = this.state;
 
-        const background = this.props.hovered ? "red" : "white";
-
         return (
-            <button
-                style={
-                    wasClicked
-                        ? { ...buttonStyles, background }
-                        : { background }
-                }
-                onClick={this.onClick}
-                onMouseOver={this.mouseOver.bind(this)}
-                onMouseOut={() => this.mouseOut()}
-            >
-                {label}
-            </button>
+            <AppContext.Consumer>
+                {state => (
+                    <button
+                        style={
+                            wasClicked
+                                ? {
+                                      ...buttonStyles,
+                                      background: state.hoveredMessages[0]
+                                          ? "red"
+                                          : "white"
+                                  }
+                                : {
+                                      background: state.hoveredMessages[0]
+                                          ? "red"
+                                          : "white"
+                                  }
+                        }
+                        onClick={this.onClick}
+                        onMouseOver={state.onHover}
+                        onMouseOut={state.onUnhover}
+                    >
+                        {label}
+                    </button>
+                )}
+            </AppContext.Consumer>
         );
     }
 }
