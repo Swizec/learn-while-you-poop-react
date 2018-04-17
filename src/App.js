@@ -7,7 +7,8 @@ import AppContext from "./AppContext";
 
 const styles = {
     fontFamily: "sans-serif",
-    textAlign: "center"
+    textAlign: "center",
+    color: Math.random() > 0.5 ? "red" : "blue"
 };
 
 const Link = ({ href, children }) => (
@@ -54,7 +55,7 @@ class App extends React.Component {
         return (
             <div style={styles}>
                 <AppContext.Provider value={this.state}>
-                    <Hello name="CodeSandbox" />
+                    <Hello name="CodeSandbox" style={{ color: "black" }} />
                     <h2>
                         {" "}
                         Start editing to see some magic happen {"\u2728"}{" "}
