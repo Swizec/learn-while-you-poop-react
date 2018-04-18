@@ -53,7 +53,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div style={styles}>
+            <div style={styles} className={"button"}>
                 <AppContext.Provider value={this.state}>
                     <Hello name="CodeSandbox" style={{ color: "black" }} />
                     <h2>
