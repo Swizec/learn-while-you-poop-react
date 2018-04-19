@@ -1,17 +1,33 @@
 import React from "react";
+import styled from "styled-components";
 
 import AppContext from "./AppContext";
 
-const Avatar = ({ src }) => <img src={src} style={{ width: "100px" }} />;
+const NarrowImage = styled.img`
+    width: 150px;
+`;
+
+const NameStyle = styled.p`
+    font-weight: bold;
+    ${props => (props.hovered ? "background: red" : null)};
+`;
+
+const Button = styled.button`
+    border-radius: 10px;
+`;
+
+const ButtonPrimary = Button.extend`
+    background: red;
+`;
+
+const Avatar = ({ src }) => <NarrowImage src={src} />;
 
 const Text = ({ children, style }) => <p style={style}>{children}</p>;
 
 const Name = ({ name }) => (
     <AppContext.Consumer>
         {({ hoveredMessages }) => (
-            <Text style={{ background: hoveredMessages[0] ? "red" : "white" }}>
-                <b>{name}</b>
-            </Text>
+            <NameStyle hovered={hoveredMessages[0]}>{name}</NameStyle>
         )}
     </AppContext.Consumer>
 );
