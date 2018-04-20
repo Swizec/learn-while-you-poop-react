@@ -12,6 +12,7 @@ class Button extends React.Component {
         this.setState({
             wasClicked: true
         });
+        this.props.onClick && this.props.onClick();
     };
 
     render() {

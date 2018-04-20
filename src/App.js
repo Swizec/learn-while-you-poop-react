@@ -15,14 +15,16 @@ const Link = ({ href, children }) => (
     <a href={href}>{children || "Click on me"}</a>
 );
 
+const caturl = "https://thecatapi.com/api/images/get?format=src&type=png";
+
 const messages = [
     {
-        avatar: "https://thecatapi.com/api/images/get?format=src&type=png",
+        avatar: `${caturl}&r=${Math.random()}`,
         username: "Swizec",
         text: "Hello world"
     },
     {
-        avatar: "https://thecatapi.com/api/images/get?format=src&type=png",
+        avatar: `${caturl}&r=${Math.random()}`,
         username: "Twitter Person",
         text: "I am tweeting in many characters"
     }
@@ -56,33 +58,31 @@ class App extends React.Component {
             <div style={styles} className={"button"}>
                 <AppContext.Provider value={this.state}>
                     <Hello name="CodeSandbox" style={{ color: "black" }} />
-                    <h2>
-                        {" "}
-                        Start editing to see some magic happen {"\u2728"}{" "}
-                    </h2>{" "}
+                    <h2>Start editing to see some magic happen {"\u2728"}</h2>
                     <div>
                         <Button
-                            label="Click Me"
+                            label="Remove Cat"
                             hovered={this.state.hoveredMessages[0]}
-                        />{" "}
-                    </div>{" "}
+                            onClick={this.removeCat}
+                        />
+                        <Button label="Add Cat" onClick={this.addCat} />
+                    </div>
                     <p>
                         This crazy fox jumped over a lazy dog{" "}
                         <Link href="facebook.com" />
                         <Link href="https://google.com">
-                            Google <b> Bold </b>{" "}
-                        </Link>{" "}
-                        <Link href="codesandbox.io"> Sandbox </Link>{" "}
-                    </p>{" "}
+                            Google <b> Bold </b>
+                        </Link>
+                        <Link href="codesandbox.io">Sandbox</Link>
+                    </p>
                     <div>
-                        {" "}
                         {messages.map((message, index) => (
                             <Message
                                 message={message}
                                 hovered={this.state.hoveredMessages[index]}
                             />
-                        ))}{" "}
-                    </div>{" "}
+                        ))}
+                    </div>
                 </AppContext.Provider>
             </div>
         );

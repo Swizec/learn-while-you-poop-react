@@ -24,12 +24,8 @@ const Avatar = ({ src }) => <NarrowImage src={src} />;
 
 const Text = ({ children, style }) => <p style={style}>{children}</p>;
 
-const Name = ({ name }) => (
-    <AppContext.Consumer>
-        {({ hoveredMessages }) => (
-            <NameStyle hovered={hoveredMessages[0]}>{name}</NameStyle>
-        )}
-    </AppContext.Consumer>
+const Name = ({ name, hovered }) => (
+    <NameStyle hovered={hovered}>{name}</NameStyle>
 );
 
 class Message extends React.Component {
@@ -37,18 +33,15 @@ class Message extends React.Component {
         read: true
     };
 
-    randomProperty = 1234;
-
     componentDidMount = () => console.log("Mounted a message");
 
     render() {
-        const { message } = this.props;
+        const { message, hovered } = this.props;
 
         return (
             <div>
-                {this.state.read ? <p>Already read this message</p> : null}
                 <Avatar src={message.avatar} />
-                <Name name={message.username} />
+                <Name name={message.username} hovered={hovered} />
                 <Text>{message.text}</Text>
             </div>
         );
