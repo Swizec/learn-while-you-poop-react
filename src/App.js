@@ -4,6 +4,7 @@ import Hello from "./Hello";
 import Button from "./Button";
 import Message from "./Message";
 import AppContext from "./AppContext";
+import Faker from "faker";
 
 const styles = {
     fontFamily: "sans-serif",
@@ -17,43 +18,76 @@ const Link = ({ href, children }) => (
 
 const caturl = "https://thecatapi.com/api/images/get?format=src&type=png";
 
-const messages = [
-    {
-        avatar: `${caturl}&r=${Math.random()}`,
-        username: "Swizec",
-        text: "Hello world"
-    },
-    {
-        avatar: `${caturl}&r=${Math.random()}`,
-        username: "Twitter Person",
-        text: "I am tweeting in many characters"
-    }
-];
-
 class App extends React.Component {
     state = {
         hoveredMessages: {
             0: false,
             1: false
         },
-        onHover: () =>
-            this.setState({
-                hoveredMessages: {
-                    ...this.state.hoveredMessages,
-                    0: true
-                }
-            }),
+        messages: [
+            {
+                avatar: `${caturl}&r=${Math.random()}`,
+                username: "Swizec",
+                text: "Hello world"
+            },
+            {
+                avatar: `${caturl}&r=${Math.random()}`,
+                username: "Twitter Person",
+                text: "I am tweeting in many characters"
+            }
+        ],
+        onHover: () => {
+            const { messages } = this.state,
+                pivot = Math.floor(messages.length / 2);
 
-        onUnhover: () =>
             this.setState({
                 hoveredMessages: {
                     ...this.state.hoveredMessages,
-                    0: false
+                    [pivot]: true
                 }
-            })
+            });
+        },
+
+        onUnhover: () => {
+            let { hoveredMessages } = this.state;
+
+            Object.keys(hoveredMessages).forEach(
+                k => (hoveredMessages[k] = false)
+            );
+
+            this.setState({
+                hoveredMessages
+            });
+        }
+    };
+
+    addCat = () =>
+        this.setState({
+            messages: [
+                ...this.state.messages,
+                {
+                    avatar: `${caturl}&r=${Math.random()}`,
+                    username: Faker.name.findName(),
+                    text: Faker.lorem.slug()
+                }
+            ]
+        });
+
+    removeCat = () => {
+        const { messages } = this.state,
+            pivot = Math.floor(messages.length / 2);
+
+        this.setState({
+            messages: [
+                ...messages.slice(0, pivot),
+                ...messages.slice(pivot + 1)
+            ]
+        });
     };
 
     render() {
+        const { messages } = this.state;
+
         return (
             <div style={styles} className={"button"}>
                 <AppContext.Provider value={this.state}>
