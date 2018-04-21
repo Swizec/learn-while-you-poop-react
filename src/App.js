@@ -4,6 +4,7 @@ import Hello from "./Hello";
 import Button from "./Button";
 import Message from "./Message";
 import AppContext from "./AppContext";
+import Video from "./Video";
 import Faker from "faker";
 
 const styles = {
@@ -93,6 +94,7 @@ class App extends React.Component {
                 <AppContext.Provider value={this.state}>
                     <Hello name="CodeSandbox" style={{ color: "black" }} />
                     <h2>Start editing to see some magic happen {"\u2728"}</h2>
+                    <Video />
                     <div>
                         <Button
                             label="Remove Cat"
