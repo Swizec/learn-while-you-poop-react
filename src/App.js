@@ -6,6 +6,7 @@ import Message from "./Message";
 import AppContext from "./AppContext";
 import Video from "./Video";
 import Faker from "faker";
+import ClickLogger from "./clickLogger";
 
 const styles = {
     fontFamily: "sans-serif",
@@ -18,6 +19,8 @@ const Link = ({ href, children }) => (
 );
 
 const caturl = "https://thecatapi.com/api/images/get?format=src&type=png";
+
+const LoggedButton = ClickLogger(Button);
 
 class App extends React.Component {
     state = {
@@ -96,7 +99,7 @@ class App extends React.Component {
                     <h2>Start editing to see some magic happen {"\u2728"}</h2>
                     <Video />
                     <div>
-                        <Button
+                        <LoggedButton
                             label="Remove Cat"
                             hovered={this.state.hoveredMessages[0]}
                             onClick={this.removeCat}
