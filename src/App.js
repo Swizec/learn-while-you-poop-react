@@ -22,6 +22,15 @@ const caturl = "https://thecatapi.com/api/images/get?format=src&type=png";
 
 const LoggedButton = ClickLogger(Button);
 
+class AlertOnClick extends React.Component {
+    onClick = () => alert("Hello world");
+
+    render() {
+        const Render = this.props.render;
+        return <Render {...this.props} onClick={this.onClick} />;
+    }
+}
+
 class App extends React.Component {
     state = {
         hoveredMessages: {
@@ -97,6 +106,10 @@ class App extends React.Component {
                 <AppContext.Provider value={this.state}>
                     <Hello name="CodeSandbox" style={{ color: "black" }} />
                     <h2>Start editing to see some magic happen {"\u2728"}</h2>
+                    <AlertOnClick render={Button} label="Alert Hai" />
+                    <AlertOnClick
+                        render={({ onClick }) => <a onClick={onClick}>Alert</a>}
+                    />
                     <Video />
                     <div>
                         <LoggedButton

@@ -12,12 +12,15 @@ class Button extends React.Component {
         this.setState({
             wasClicked: true
         });
+        console.log(this.props.onClick);
         this.props.onClick && this.props.onClick();
     };
 
     render() {
         const { label, rounded } = this.props,
             { wasClicked } = this.state;
+
+        console.log(this.props);
 
         return (
             <AppContext.Consumer>
