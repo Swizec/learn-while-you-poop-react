@@ -26,8 +26,14 @@ class AlertOnClick extends React.Component {
     onClick = () => alert("Hello world");
 
     render() {
-        const Render = this.props.render;
-        return <Render {...this.props} onClick={this.onClick} />;
+        const Render = this.props.render || this.props.children;
+        return (
+            <div>
+                <Render {...this.props} onClick={this.onClick} />
+                <br />
+                <small>This will throw an alert</small>
+            </div>
+        );
     }
 }
 
@@ -107,9 +113,10 @@ class App extends React.Component {
                     <Hello name="CodeSandbox" style={{ color: "black" }} />
                     <h2>Start editing to see some magic happen {"\u2728"}</h2>
                     <AlertOnClick render={Button} label="Alert Hai" />
-                    <AlertOnClick
-                        render={({ onClick }) => <a onClick={onClick}>Alert</a>}
-                    />
+                    <AlertOnClick>
+                        {({ onClick }) => <a onClick={onClick}>Alert</a>}
+                    </AlertOnClick>
+
                     <Video />
                     <div>
                         <LoggedButton
