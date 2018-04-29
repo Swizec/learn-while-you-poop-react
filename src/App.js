@@ -55,6 +55,7 @@ class App extends React.Component {
                 text: "I am tweeting in many characters"
             }
         ],
+        statusref: React.createRef(),
         onHover: () => {
             const { messages } = this.state,
                 pivot = Math.floor(messages.length / 2);
@@ -109,6 +110,7 @@ class App extends React.Component {
 
         return (
             <div style={styles} className={"button"}>
+                <div ref={this.state.statusref} />
                 <AppContext.Provider value={this.state}>
                     <Hello name="CodeSandbox" style={{ color: "black" }} />
                     <h2>Start editing to see some magic happen {"\u2728"}</h2>
