@@ -7,6 +7,7 @@ import AppContext from "./AppContext";
 import Video from "./Video";
 import Faker from "faker";
 import ClickLogger from "./clickLogger";
+import ErrorBoundary from "./ErrorBoundary";
 
 const styles = {
     fontFamily: "sans-serif",
@@ -22,6 +23,24 @@ const caturl = "https://thecatapi.com/api/images/get?format=src&type=png";
 
 const LoggedButton = ClickLogger(Button);
 
+class ThisErrors extends React.Component {
+    state = { count: 0 };
+
+    onClick = () => {
+        this.setState({
+            count: this.state.count + 1
+        });
+    };
+
+    render() {
+        const { count } = this.state;
+        if (count > 3) {
+            throw new Error("OH  noewS!");
+        }
+
+        return <h1 onClick={this.onClick}>{count}</h1>;
+    }
+}
 class AlertOnClick extends React.Component {
     onClick = () => alert("Hello world");
 
@@ -110,6 +129,9 @@ class App extends React.Component {
 
         return (
             <div style={styles} className={"button"}>
+                <ErrorBoundary>
+                    <ThisErrors />
+                </ErrorBoundary>
                 <div ref={this.state.statusref} />
                 <AppContext.Provider value={this.state}>
                     <Hello name="CodeSandbox" style={{ color: "black" }} />
