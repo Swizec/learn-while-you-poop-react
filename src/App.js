@@ -8,6 +8,7 @@ import Video from "./Video";
 import Faker from "faker";
 import ClickLogger from "./clickLogger";
 import ErrorBoundary from "./ErrorBoundary";
+import MessageForm from "./MessageForm";
 
 const styles = {
     fontFamily: "sans-serif",
@@ -100,14 +101,14 @@ class App extends React.Component {
         }
     };
 
-    addCat = () =>
+    addCat = ({ username, text }) =>
         this.setState({
             messages: [
                 ...this.state.messages,
                 {
                     avatar: `${caturl}&r=${Math.random()}`,
-                    username: Faker.name.findName(),
-                    text: Faker.lorem.slug()
+                    username: username || Faker.name.findName(),
+                    text: text || Faker.lorem.slug()
                 }
             ]
         });
@@ -166,6 +167,7 @@ class App extends React.Component {
                             />
                         ))}
                     </div>
+                    <MessageForm submit={this.addCat} />
                 </AppContext.Provider>
             </div>
         );
