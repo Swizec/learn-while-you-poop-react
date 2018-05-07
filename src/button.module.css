@@ -6,7 +6,6 @@
 }
 
 .greenButton {
-    composes: button;
     border-radius: 10px;
     border: 2px solid greenyellow;
 }

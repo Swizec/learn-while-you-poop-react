@@ -10,7 +10,7 @@ class Video extends React.Component {
         return (
             <div>
                 <video
-                    src="screen-vid.mp4"
+                    src="http://localhost:3000/screen-vid.mp4"
                     width={640}
                     height={480}
                     ref={this.videoref}
